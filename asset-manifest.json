@@ -1,13 +1,14 @@
 {
   "files": {
     "main.css": "/Refyn-/static/css/main.92e7318e.css",
-    "main.js": "/Refyn-/static/js/main.693751ca.js",
+    "main.js": "/Refyn-/static/js/main.3fafc3b1.js",
+    "static/media/onboarding-calendar.png": "/Refyn-/static/media/onboarding-calendar.15f98b3504ad3f90edd8.png",
     "index.html": "/Refyn-/index.html",
     "main.92e7318e.css.map": "/Refyn-/static/css/main.92e7318e.css.map",
-    "main.693751ca.js.map": "/Refyn-/static/js/main.693751ca.js.map"
+    "main.3fafc3b1.js.map": "/Refyn-/static/js/main.3fafc3b1.js.map"
   },
   "entrypoints": [
     "static/css/main.92e7318e.css",
-    "static/js/main.693751ca.js"
+    "static/js/main.3fafc3b1.js"
   ]
 }

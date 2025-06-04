@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import BackToTopButton from '../components/BackToTopButton';
 import RoutineCard from '../components/RoutineCard';
 import { ChevronLeft, ChevronRight, SortAsc } from 'lucide-react';
+import { useRefyn } from '../context/RefynContext';
 import './Routines.css';
 
-function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }) {
+function Routines() {
   const navigate = useNavigate();
+  const { routines, trackerTasks } = useRefyn();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isFading, setIsFading] = useState(false);
@@ -107,14 +109,6 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
             <RoutineCard
               key={routine.id}
               routine={routine}
-              trackerTasks={trackerTasks}
-              onDelete={onDeleteRoutine}
-              onFrequencyChange={onUpdateFrequency}
-              onView={() =>
-                window.dispatchEvent(new CustomEvent('navigate', {
-                  detail: `/routine/${routine.id}`
-                }))
-              }
             />
           ))}
         </section>

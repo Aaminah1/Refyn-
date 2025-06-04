@@ -1,7 +1,9 @@
+// ✅ RoutineCard.jsx — now using context for delete and frequency
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Trash2 } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
+import { useRefyn } from '../context/RefynContext';
 import './RoutineCard.css';
 
 const FREQUENCY_OPTIONS = [
@@ -14,8 +16,10 @@ const FREQUENCY_OPTIONS = [
   'Weekdays only'
 ];
 
-function RoutineCard({ routine, onDelete, onFrequencyChange }) {
+function RoutineCard({ routine }) {
   const navigate = useNavigate();
+  const { handleDeleteRoutine, handleUpdateFrequency } = useRefyn();
+
   const [showConfirm, setShowConfirm] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
@@ -38,8 +42,12 @@ function RoutineCard({ routine, onDelete, onFrequencyChange }) {
   const handleDelete = () => {
     setFadeOut(true);
     setTimeout(() => {
-      onDelete(routine.id);
-    }, 300); // Match the CSS animation duration
+      handleDeleteRoutine(routine.id);
+    }, 300);
+  };
+
+  const handleFrequencyChange = (e) => {
+    handleUpdateFrequency(routine.id, e.target.value);
   };
 
   return (
@@ -66,14 +74,7 @@ function RoutineCard({ routine, onDelete, onFrequencyChange }) {
           {taskCount} {taskCount === 1 ? 'task' : 'tasks'}
         </span>
         <span className="routine-next">
-          Next:{" "}
-          <strong
-            tabIndex={0}
-            className={nextDay === "Today" ? "highlight-today" : ""}
-            aria-label={`Next session is ${nextDay}`}
-          >
-            {nextDay}
-          </strong>
+          Next: <strong tabIndex={0} className={nextDay === "Today" ? "highlight-today" : ""}>{nextDay}</strong>
         </span>
       </div>
 
@@ -83,7 +84,7 @@ function RoutineCard({ routine, onDelete, onFrequencyChange }) {
           <select
             id={`freq-${routine.id}`}
             value={routine.frequency || 'Daily'}
-            onChange={(e) => onFrequencyChange(routine.id, e.target.value)}
+            onChange={handleFrequencyChange}
             aria-describedby={`freq-desc-${routine.id}`}
           >
             {FREQUENCY_OPTIONS.map(freq => (
@@ -91,9 +92,8 @@ function RoutineCard({ routine, onDelete, onFrequencyChange }) {
             ))}
           </select>
           <small id={`freq-desc-${routine.id}`} className="sr-only">
-  Select how often you want to repeat this routine
-</small>
-
+            Select how often you want to repeat this routine
+          </small>
         </div>
 
         <button

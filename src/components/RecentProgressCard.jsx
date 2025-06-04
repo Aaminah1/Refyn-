@@ -2,16 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RecentProgressCard.css';
 import { ImageIcon, TrendingUp, CalendarDays } from 'lucide-react';
+import { useRefyn } from '../context/RefynContext';
 
-function RecentProgressCard({
-  latestImages = [],
-  totalImages = 0,
-  lastDate = null,
-  topRoutine = '',
-  topRoutineCount = 0
-}) {
+function RecentProgressCard() {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const { progressImages } = useRefyn();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 600);
@@ -19,13 +15,25 @@ function RecentProgressCard({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (!latestImages.length) {
+  if (!progressImages.length) {
     return (
       <div className="recent-progress-card empty" role="region" aria-label="Recent progress">
         <p>No progress images yet.</p>
       </div>
     );
   }
+
+  const sortedImages = [...progressImages].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const latestImages = sortedImages.slice(0, 3);
+  const totalImages = progressImages.length;
+  const lastDate = latestImages[0]?.date;
+
+  const routineFrequency = progressImages.reduce((acc, img) => {
+    acc[img.routine] = (acc[img.routine] || 0) + 1;
+    return acc;
+  }, {});
+
+  const topRoutine = Object.entries(routineFrequency).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
 
   const imagesToShow = isMobile ? latestImages.slice(0, 1) : latestImages;
 

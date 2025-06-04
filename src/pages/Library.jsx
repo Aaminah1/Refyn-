@@ -9,8 +9,14 @@ import SearchBar from '../components/SearchBar';
 import { mapSearchTermToCategory } from '../utils/searchHelpers';
 import './Library.css';
 import { SortAsc, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRefyn } from '../context/RefynContext';
 
-function Library({ onAddRoutine, routines }) {
+function Library() {
+  const {
+    routines,
+    addRoutine
+  } = useRefyn();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOption, setSortOption] = useState('default');
@@ -130,15 +136,7 @@ function Library({ onAddRoutine, routines }) {
         <div className={`routine-results ${isFading ? 'fade-out' : ''}`} role="region" aria-label="Routine results">
           {paginatedRoutines.map((routine) => (
             <div key={routine.id} role="group" aria-label={`Routine titled ${routine.title}, category ${routine.category}.`}>
-              <LibraryRoutineCard
-                routine={routine}
-                isAlreadyAdded={routines.some(r => r.id === routine.id)}
-                onAddRoutine={() => onAddRoutine(routine)}
-                onNavigate={() => navigate(`/routine/${routine.id}`)}
-                onNavigateToRoutines={() =>
-                  window.dispatchEvent(new CustomEvent('navigate', { detail: 'Routines' }))
-                }
-              />
+              <LibraryRoutineCard routine={routine} isAlreadyAdded={routines.some(r => r.id === routine.id)} onAddRoutine={() => addRoutine(routine)} onNavigate={() => navigate(`/routine/${routine.id}`)} />
             </div>
           ))}
         </div>

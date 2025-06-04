@@ -1,9 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRefyn } from '../context/RefynContext';
 import './Library.css';
 
-function LibraryRoutineCard({ routine, isAlreadyAdded, onAddRoutine, onNavigate }) {
+function LibraryRoutineCard({ routine }) {
   const navigate = useNavigate();
+  const { routines, handleAddRoutine } = useRefyn();
+
+
+  const isAlreadyAdded = routines.some(r => r.id === routine.id);
 
   const handleNavigateToRoutines = () => {
     navigate('/routines');
@@ -24,7 +29,7 @@ function LibraryRoutineCard({ routine, isAlreadyAdded, onAddRoutine, onNavigate 
       <div className="library-button-row">
         <button
           type="button"
-          onClick={() => onNavigate?.()}
+          onClick={() => navigate(`/routine/${routine.id}`)}
           className="btn-secondary"
           aria-label={`View more details about ${routine.title}`}
         >
@@ -46,7 +51,8 @@ function LibraryRoutineCard({ routine, isAlreadyAdded, onAddRoutine, onNavigate 
         ) : (
           <button
             type="button"
-            onClick={() => onAddRoutine?.()}
+         onClick={() => handleAddRoutine(routine)}
+
             className="btn-primary"
             aria-label={`Add ${routine.title} to My Routines`}
           >

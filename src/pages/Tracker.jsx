@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useRefyn } from '../context/RefynContext';
 import BackToTopButton from '../components/BackToTopButton';
@@ -12,61 +12,23 @@ function Tracker() {
   const {
     user,
     routines,
-    trackerTasks,
     progressImages,
-    setProgressImages
+    setProgressImages,
+    selectedDate,
+    setSelectedDate,
+    completedTasks,
+    setCompletedTasks,
+    getTodayTasks,
+    selectedTask,
+    setSelectedTask
   } = useRefyn();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'today';
-  
 
-  const [completedTasks, setCompletedTasks] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [routineFilter, setRoutineFilter] = useState('All');
-  const [selectedTask, setSelectedTask] = useState(null);
   const [previewIndex, setPreviewIndex] = useState(null);
   const [uploading, setUploading] = useState(false);
-
-  const todayKey = `${user}-completedTasks-${selectedDate.toISOString().split('T')[0]}`;
-
-  const weekDates = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - d.getDay() + i);
-    return d;
-  });
-
-  useEffect(() => {
-    const storedTasks = localStorage.getItem(todayKey);
-    if (storedTasks) {
-      setCompletedTasks(JSON.parse(storedTasks));
-    }
-  }, [todayKey]);
-
-  useEffect(() => {
-    localStorage.setItem(todayKey, JSON.stringify(completedTasks));
-  }, [completedTasks, todayKey]);
-
-  const getTodayTasks = () => {
-    const dayIndex = selectedDate.getDay();
-    const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
-
-    return trackerTasks.filter(task => {
-      const routine = routines.find(r => r.title === task.routineTitle);
-      const freq = routine?.frequency || 'Daily';
-      switch (freq) {
-        case 'Daily': return true;
-        case 'Weekdays only': return dayIndex >= 1 && dayIndex <= 5;
-        case 'Weekends only': return dayIndex === 0 || dayIndex === 6;
-        case 'Weekly': return dayIndex === 1;
-        case 'Every other day': return selectedDate.getDate() % 2 === 0;
-        case '2x per week': return ['Monday', 'Thursday'].includes(dayName);
-        case '3x per week': return ['Monday', 'Wednesday', 'Friday'].includes(dayName);
-        case '4x per week': return ['Monday', 'Tuesday', 'Thursday', 'Saturday'].includes(dayName);
-        default: return true;
-      }
-    });
-  };
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -160,13 +122,8 @@ function Tracker() {
     .filter(img => routineFilter === 'All' || img.routine === routineFilter)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  const showPrev = useCallback(() => {
-    setPreviewIndex(i => (i > 0 ? i - 1 : i));
-  }, []);
-
-  const showNext = useCallback(() => {
-    setPreviewIndex(i => (i < sortedImages.length - 1 ? i + 1 : i));
-  }, [sortedImages.length]);
+  const showPrev = () => setPreviewIndex(i => (i > 0 ? i - 1 : i));
+  const showNext = () => setPreviewIndex(i => (i < sortedImages.length - 1 ? i + 1 : i));
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -179,6 +136,12 @@ function Tracker() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [previewIndex, showNext, showPrev]);
+
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - d.getDay() + i);
+    return d;
+  });
 
   return (
     <main className="tracker-wrapper" role="main" aria-labelledby="tracker-heading">
@@ -196,17 +159,7 @@ function Tracker() {
 
         <TrackerTabs activeTab={activeTab} onTabChange={(tab) => setSearchParams({ tab })} />
 
-        {activeTab === 'today' && (
-          <TodayTasks
-            selectedDate={selectedDate}
-            getTodayTasks={getTodayTasks}
-            completedTasks={completedTasks}
-            setCompletedTasks={setCompletedTasks}
-            selectedTask={selectedTask}
-            setSelectedTask={setSelectedTask}
-            routines={routines}
-          />
-        )}
+        {activeTab === 'today' && <TodayTasks />}
 
         {activeTab === 'progress' && (
           <ProgressTimeline

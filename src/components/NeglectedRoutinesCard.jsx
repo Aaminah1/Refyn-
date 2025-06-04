@@ -1,7 +1,9 @@
 import React from 'react';
+import { useRefyn } from '../context/RefynContext';
 import './NeglectedRoutinesCard.css';
 
-function NeglectedRoutinesCard({ routines, progressImages }) {
+function NeglectedRoutinesCard() {
+  const { routines, progressImages } = useRefyn();
   const today = new Date();
 
   const neglected = routines

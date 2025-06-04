@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// ✅ RefynContext.jsx — updated with routine delete and frequency update
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback
+} from 'react';
 
 const RefynContext = createContext();
 
@@ -8,7 +16,50 @@ export const RefynProvider = ({ children }) => {
   const [trackerTasks, setTrackerTasks] = useState([]);
   const [progressImages, setProgressImages] = useState([]);
 
-  // Load saved data for the current user
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const todayKey = useMemo(() => {
+    return `${user}-completedTasks-${selectedDate.toISOString().split('T')[0]}`;
+  }, [user, selectedDate]);
+
+  const [completedTasks, setCompletedTasks] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      const stored = localStorage.getItem(todayKey);
+      setCompletedTasks(stored ? JSON.parse(stored) : []);
+    }
+  }, [todayKey, user]);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(todayKey, JSON.stringify(completedTasks));
+    }
+  }, [completedTasks, todayKey, user]);
+
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const getTodayTasks = useCallback(() => {
+    const dayIndex = selectedDate.getDay();
+    const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'long' });
+
+    return trackerTasks.filter(task => {
+      const routine = routines.find(r => r.title === task.routineTitle);
+      const freq = routine?.frequency || 'Daily';
+      switch (freq) {
+        case 'Daily': return true;
+        case 'Weekdays only': return dayIndex >= 1 && dayIndex <= 5;
+        case 'Weekends only': return dayIndex === 0 || dayIndex === 6;
+        case 'Weekly': return dayIndex === 1;
+        case 'Every other day': return selectedDate.getDate() % 2 === 0;
+        case '2x per week': return ['Monday', 'Thursday'].includes(dayName);
+        case '3x per week': return ['Monday', 'Wednesday', 'Friday'].includes(dayName);
+        case '4x per week': return ['Monday', 'Tuesday', 'Thursday', 'Saturday'].includes(dayName);
+        default: return true;
+      }
+    });
+  }, [selectedDate, trackerTasks, routines]);
+
   useEffect(() => {
     if (user) {
       const saved = localStorage.getItem(`refyn-${user}`);
@@ -25,7 +76,6 @@ export const RefynProvider = ({ children }) => {
     }
   }, [user]);
 
-  // Save data whenever routines, tasks, or images change
   useEffect(() => {
     if (user) {
       const dataToSave = {
@@ -74,7 +124,6 @@ export const RefynProvider = ({ children }) => {
     });
   };
 
-  // Add this logout handler
   const handleLogout = () => {
     setUser(null);
     setRoutines([]);
@@ -97,7 +146,14 @@ export const RefynProvider = ({ children }) => {
         handleDeleteRoutine,
         handleUpdateFrequency,
         handleToggleTask,
-        handleLogout 
+        handleLogout,
+        selectedDate,
+        setSelectedDate,
+        completedTasks,
+        setCompletedTasks,
+        selectedTask,
+        setSelectedTask,
+        getTodayTasks
       }}
     >
       {children}

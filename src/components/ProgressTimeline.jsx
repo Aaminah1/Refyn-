@@ -4,9 +4,9 @@ import { Trash2 } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import PreviewModal from './PreviewModal';
 import Tooltip from './Tooltip';
+import { useRefyn } from '../context/RefynContext';
 
 function ProgressTimeline({
-  routines,
   routineFilter,
   setRoutineFilter,
   sortedImages,
@@ -19,6 +19,8 @@ function ProgressTimeline({
   showNext,
   uploading
 }) {
+  const { routines } = useRefyn();
+
   const [captions, setCaptions] = useState([]);
   const [confirmIdx, setConfirmIdx] = useState(null);
   const [deletingIndex, setDeletingIndex] = useState(null);
@@ -159,7 +161,7 @@ function ProgressTimeline({
 
       {previewIndex !== null && (
         <PreviewModal
-        key={sortedImages[previewIndex].url} 
+          key={sortedImages[previewIndex].url}
           image={sortedImages[previewIndex].url}
           caption={sortedImages[previewIndex].caption}
           onClose={() => setPreviewIndex(null)}

@@ -1,11 +1,45 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRefyn } from '../context/RefynContext';
 import './TodayTaskSummary.css';
 
-function TodayTaskSummary({ totalTasks, completedTasks }) {
+function TodayTaskSummary() {
   const navigate = useNavigate();
+  const { user, trackerTasks, routines } = useRefyn();
 
-  const percentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+  const todayKey = `${user}-completedTasks-${new Date().toISOString().split('T')[0]}`;
+  const completedTasks = JSON.parse(localStorage.getItem(todayKey) || '[]');
+
+  const todayTasks = trackerTasks.filter(task => {
+    const routine = routines.find(r => r.title === task.routineTitle);
+    if (!routine) return false;
+    const freq = routine.frequency || 'Daily';
+    const day = new Date().getDay();
+
+    switch (freq) {
+      case 'Daily':
+        return true;
+      case 'Every other day':
+        return day % 2 === 0;
+      case '2x per week':
+        return day === 1 || day === 4;
+      case '3x per week':
+        return day === 1 || day === 3 || day === 5;
+      case '4x per week':
+        return day === 1 || day === 2 || day === 4 || day === 5;
+      case 'Weekends only':
+        return day === 0 || day === 6;
+      case 'Weekdays only':
+        return day >= 1 && day <= 5;
+      default:
+        return true;
+    }
+  });
+
+  const totalTasks = todayTasks.length;
+  const completed = completedTasks.length;
+  const percentage = totalTasks === 0 ? 0 : Math.round((completed / totalTasks) * 100);
+
   const radius = 60;
   const stroke = 6;
   const normalizedRadius = radius - stroke;
@@ -35,7 +69,7 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
       className="task-summary-card"
       role="button"
       tabIndex="0"
-      aria-label={`View today's task progress: ${completedTasks} of ${totalTasks} tasks completed, ${percentage}%`}
+      aria-label={`View today's task progress: ${completed} of ${totalTasks} tasks completed, ${percentage}%`}
       aria-describedby="motivation-text"
       onClick={() => navigate('/tracker')}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && navigate('/tracker')}
@@ -88,7 +122,7 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
 
       <div className="task-details">
         <p className="task-stats">
-          <strong>{completedTasks}</strong> of <strong>{totalTasks}</strong> tasks completed
+          <strong>{completed}</strong> of <strong>{totalTasks}</strong> tasks completed
         </p>
         <p
           id="motivation-text"

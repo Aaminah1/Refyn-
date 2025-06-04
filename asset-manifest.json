@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Refyn-/static/css/main.473d23de.css",
-    "main.js": "/Refyn-/static/js/main.442e10f4.js",
+    "main.css": "/Refyn-/static/css/main.92e7318e.css",
+    "main.js": "/Refyn-/static/js/main.693751ca.js",
     "index.html": "/Refyn-/index.html",
-    "main.473d23de.css.map": "/Refyn-/static/css/main.473d23de.css.map",
-    "main.442e10f4.js.map": "/Refyn-/static/js/main.442e10f4.js.map"
+    "main.92e7318e.css.map": "/Refyn-/static/css/main.92e7318e.css.map",
+    "main.693751ca.js.map": "/Refyn-/static/js/main.693751ca.js.map"
   },
   "entrypoints": [
-    "static/css/main.473d23de.css",
-    "static/js/main.442e10f4.js"
+    "static/css/main.92e7318e.css",
+    "static/js/main.693751ca.js"
   ]
 }

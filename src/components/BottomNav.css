@@ -32,7 +32,7 @@
     padding: 0.3rem 0;
   }
   .bottom-nav button:focus {
-  outline: 3px solid #222; /* High contrast outline */
+  outline: 3px solid #222; 
   outline-offset: 2px;
 }
 
@@ -61,7 +61,7 @@
   }
 
   .bottom-nav button.active {
-    color: #b00020; /* Darker red for better contrast */
+    color: #b00020; 
   }
 }.bottom-nav button:focus {
   outline: 2px solid var(--primary-color);

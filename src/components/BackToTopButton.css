@@ -32,15 +32,15 @@
 /* Tablet & small screens */
 @media (max-width: 768px) {
   .back-to-top-btn {
-    bottom: 4.5rem;   /* Push above bottom nav & CTA */
-    right: 1rem;    /* Tuck neatly in bottom right */
+    bottom: 4.5rem;  
+    right: 1rem;    
   }
 }
 
 /* Tiny phones */
 @media (max-width: 400px) {
   .back-to-top-btn {
-    bottom: 4.5rem;   /* Push even higher on short screens */
+    bottom: 4.5rem;   
     right: 0.75rem;
   }
 }

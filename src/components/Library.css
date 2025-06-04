@@ -251,15 +251,15 @@
 }
 
 .btn-secondary:hover {
- background-color: #fff5f5; /* soft red tint */
-  color: #d62828;            /* slightly deeper red */
+ background-color: #fff5f5; 
+  color: #d62828;            
   border-color: #d62828;
 }
 .added-pill {
  display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.5rem; /* Same as button height */
+  height: 2.5rem; 
   padding: 0 0.75rem;
   border-radius: 8px;
   background-color: #eafaf1;
@@ -297,7 +297,7 @@
 .added-pill {
   display: flex;
   align-items: center;
-  height: 2.5rem; /* match button height */
+  height: 2.5rem;
   padding: 0 0.75rem;
 }
 
@@ -308,7 +308,7 @@
   gap: 0.75rem;
   margin-top: 1rem;
   align-items: center;
-  min-height: 2.75rem; /* Add this to lock the height */
+  min-height: 2.75rem; 
 }
 .library-top.subtle {
   background-color: #fff;
@@ -320,7 +320,7 @@
 }
 /* Reduce margin between routine cards and pagination */
 .routine-results {
-  margin-bottom: 1rem; /* reduce from larger value */
+  margin-bottom: 1rem; 
 }
 
 /* Adjust spacing for pagination */
@@ -358,7 +358,7 @@
 
 @media (max-width: 768px) {
   .pagination-controls {
-    margin-bottom: 7 /* Extra padding on mobile */
+    margin-bottom: 7 
   }
 }
 

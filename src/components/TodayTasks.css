@@ -24,23 +24,23 @@
   font-weight: 600;
   margin-bottom: 1rem;
   color: #555555;
-  text-align: left; /* or center if preferred */
+  text-align: left; 
 }
 
-/* Section wrappers */
+
 /* Task Section Container */
 .task-section {
-  background: none;            /* Remove white box background */
-  padding: 0;                  /* Remove internal padding */
-  border-radius: 0;            /* Remove rounding */
-  box-shadow: none;            /* Remove shadow */
-  border: none;                /* Remove outline border */
-  margin-bottom: 2.5rem;       /* Keep space between sections */
+  background: none;            
+  padding: 0;                  
+  border-radius: 0;           
+  box-shadow: none;           
+  border: none;                
+  margin-bottom: 2.5rem;       
   transition: none;
 }
 
 .task-section.done {
-  background-color: transparent; /* No background tint for done section */
+  background-color: transparent; 
 }
 
 /* Section Titles */
@@ -56,7 +56,7 @@
 }
 
 .task-section-title.done {
-  color: #3bb36a;
+  color:  #333;
 }
 
 .task-section-title::before {
@@ -271,8 +271,8 @@
 }.task-steps-panel {
   background-color: #fff8f8;
   border-left: 3px solid #f03e3e;
-  margin-top: -0.3rem; /* removes gap between task card */
-  margin-left: 1.25rem; /* slight indent from task */
+  margin-top: -0.3rem; 
+  margin-left: 1.25rem; 
   margin-bottom: 1.25rem;
   padding: 0.85rem 1rem 0.9rem 1.2rem;
   border-radius: 0 0 8px 8px;
@@ -378,7 +378,7 @@
 
 @media (max-width: 768px) {
   .today-tasks-container {
-    padding: 0; /* Remove side padding */
+    padding: 0; 
   }
 
   .task-section {
@@ -388,7 +388,7 @@
 
   .task-card {
     width: 100%;
-    flex-direction: row; /* Keep checkbox + title + chevron in line */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;

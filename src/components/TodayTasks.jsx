@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import TaskInfoModal from './TaskInfoModal';
 import './TodayTasks.css';
 import { ChevronDown } from 'lucide-react';
-import { useCelebrateConfetti } from '../hooks/useCelebrateConfetti';
+import confetti from 'canvas-confetti';
+import React, { useState, useEffect } from 'react';
 
 function TodayTasks({
   selectedDate,
@@ -34,7 +34,41 @@ function TodayTasks({
   };
 
   const tasks = getTodayTasks();
-  useCelebrateConfetti(selectedDate, tasks, completedTasks);
+
+  useEffect(() => {
+  const allTasksDone = tasks.length > 0 && tasks.every((task) => completedTasks.includes(task.id));
+  const key = `${selectedDate.toDateString()}-confettiPlayed`;
+
+  if (allTasksDone && !localStorage.getItem(key)) {
+    // Play confetti
+    const duration = 1500;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 6,
+        angle: 60,
+        spread: 70,
+        origin: { x: 0 },
+        zIndex: 9999,
+      });
+      confetti({
+        particleCount: 6,
+        angle: 120,
+        spread: 70,
+        origin: { x: 1 },
+        zIndex: 9999,
+      });
+
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+
+    frame();
+    localStorage.setItem(key, 'true'); // Mark confetti as played for today
+  }
+}, [completedTasks, tasks, selectedDate]);
+
+
 
   const activeTasks = tasks.filter(
     (task) => !completedTasks.includes(task.id) || recentlyCompleted.includes(task.id)

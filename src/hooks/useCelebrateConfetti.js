@@ -1,4 +1,3 @@
-// ✅ useCelebrateConfetti.js — reusable hook for confetti
 import { useEffect, useRef, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 

@@ -161,7 +161,7 @@ max-width: 900px;
 
 .manage-routines-link:hover {
   text-decoration: underline;
-  color: #1d4ed8; /* Slightly lighter on hover */
+  color: #1d4ed8; 
 }
 
 
@@ -209,10 +209,10 @@ max-width: 900px;
 }
 
 
-/* Optional Desktop: back to 1 column or 3 */
+/* Desktop: back to 1 column or 3 */
 @media (min-width: 1024px) {
   .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr); /* or repeat(3, 1fr) if you prefer */
+    grid-template-columns: repeat(2, 1fr); 
   }
 }
 
@@ -258,16 +258,16 @@ max-width: 900px;
   }
 
   .onboarding-illustration {
-    display: none; /* Hide side image */
+    display: none; 
   }
 
   .onboarding-text {
     align-items: center;
-    text-align: center; /* 🟢 This centers all text inside */
+    text-align: center; 
   }
 
   .onboarding-text h3 {
-    font-size: 2.2rem; /* Optional: slightly smaller heading on mobile */
+    font-size: 2.2rem; 
   }
 
   .onboarding-image-inline {

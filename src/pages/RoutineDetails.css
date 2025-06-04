@@ -261,7 +261,7 @@
   }
 
 .routine-title {
-  font-size: clamp(2rem, 4vw, 3.25rem); /* Responsive between 2rem and 3.25rem */
+  font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 700;
   margin: 0;
   line-height: 1.2;

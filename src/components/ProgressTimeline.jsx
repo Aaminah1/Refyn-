@@ -155,6 +155,8 @@ function ProgressTimeline({
         </div>
       )}
 
+      
+
       {previewIndex !== null && (
         <PreviewModal
           image={sortedImages[previewIndex].url}

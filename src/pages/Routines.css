@@ -35,6 +35,20 @@ max-width: 900px;
   border-radius: 12px;
 
 }
+@media (max-width: 480px) {
+  .routines-page.mobile-tight {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+  .routines-page.mobile-tight .library-heading,
+  .routines-page.mobile-tight .library-subheading,
+  .routines-page.mobile-tight .sort-dropdown,
+  .routines-page.mobile-tight .routines-count {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+}
+
 
 .routine-top {
   display: flex;
@@ -106,6 +120,12 @@ max-width: 900px;
 .fixed-library-button .cta-button:hover {
   background-color: #d62828;
   transform: translateY(-1px);
+}
+@media (max-width: 480px) {
+  .library-top.mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* Adjust for mobile to prevent overlap with bottom nav */

@@ -65,7 +65,7 @@ function Home() {
             />
             <div className="onboarding-text">
               <p className="onboarding-welcome" id="welcome-heading">Welcome, {user}</p>
-              <h1>Start Your Routine</h1>
+              <h1>Refyn Your Routine</h1>
               <p className="onboarding-subtext">
                 Begin your glow-up journey by exploring routines that fit your goals.
               </p>

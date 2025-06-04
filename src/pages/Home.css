@@ -53,19 +53,24 @@
 
 .onboarding-btn {
   background-color: #f03e3e;
-  color: white;
+  color: #ffffff;
   border: none;
-  font-weight: 600;
+font-weight: 700;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.onboarding-btn:hover {
-  background-color: #d62828;
+.onboarding-btn:hover,
+.onboarding-btn:focus {
+ background-color: #d62828;
+  transform: translateY(-1px);
 }
+
 
 @media (max-width: 768px) {
   .onboarding-card {
@@ -143,10 +148,11 @@ max-width: 900px;
   margin-top: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  color: #1e40af; /* Tailwind's blue-800 or choose your link color */
+  color: #1e40af;
   cursor: pointer;
   text-decoration: none;
   transition: color 0.2s ease;
+   margin-top: auto;
 }
 
 .manage-routines-link:hover {
@@ -213,7 +219,7 @@ max-width: 900px;
   }
 
   .dashboard section {
-    padding: 1rem;
+    padding: 0.4rem;
   }
 
   .progress-grid {
@@ -276,7 +282,7 @@ max-width: 900px;
   }
 
   .dashboard section {
-    padding: 1.25rem 1.5rem;
+    padding: 0.4rem;
   }
 
   .task-summary-card,

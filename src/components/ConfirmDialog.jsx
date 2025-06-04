@@ -12,6 +12,7 @@ function ConfirmDialog({ message, onConfirm, onCancel }) {
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
+        e.stopPropagation(); // prevent bubbling
         onCancel();
       }
     };
@@ -30,9 +31,11 @@ function ConfirmDialog({ message, onConfirm, onCancel }) {
       onClick={onCancel}
     >
       <div className="confirm-box" onClick={(e) => e.stopPropagation()}>
+        <h2 id="confirm-title" className="visually-hidden">Confirm Deletion</h2>
         <p id="confirm-desc" className="confirm-message">{message}</p>
         <div className="confirm-actions">
           <button
+            type="button"
             className="confirm-btn cancel"
             onClick={onCancel}
             ref={cancelButtonRef}
@@ -40,6 +43,7 @@ function ConfirmDialog({ message, onConfirm, onCancel }) {
             Cancel
           </button>
           <button
+            type="button"
             className="confirm-btn delete"
             onClick={onConfirm}
           >

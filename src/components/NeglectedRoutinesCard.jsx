@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './NeglectedRoutinesCard.css';
 
 function NeglectedRoutinesCard({ routines, progressImages }) {
@@ -25,10 +24,19 @@ function NeglectedRoutinesCard({ routines, progressImages }) {
     .slice(0, 3);
 
   return (
-    <section className="neglected-routines">
+    <div
+      className="neglected-routines"
+      role="region"
+      aria-labelledby="neglected-routines-heading"
+    >
+      <h3 id="neglected-routines-heading" className="visually-hidden">
+        Neglected Routines
+      </h3>
 
       {neglected.length === 0 ? (
-        <p className="routine-empty-msg">All routines are on track 🎉</p>
+        <p className="routine-empty-msg" role="status" aria-live="polite">
+          All routines are on track 🎉
+        </p>
       ) : (
         <ul className="neglected-list">
           {neglected.map((routine, index) => (
@@ -36,16 +44,14 @@ function NeglectedRoutinesCard({ routines, progressImages }) {
               <span className="routine-name">{routine.title}</span>
               <span className="routine-status">
                 {routine.daysAgo === null
-                  ? 'never logged'
-                  : `last done ${routine.daysAgo} day${routine.daysAgo !== 1 ? 's' : ''} ago`}
+                  ? 'Never logged'
+                  : `Last done ${routine.daysAgo} day${routine.daysAgo !== 1 ? 's' : ''} ago`}
               </span>
             </li>
           ))}
         </ul>
       )}
-
-      
-    </section>
+    </div>
   );
 }
 

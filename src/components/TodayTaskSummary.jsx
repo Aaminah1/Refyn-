@@ -35,11 +35,16 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
       className="task-summary-card"
       role="button"
       tabIndex="0"
-      aria-label="View today's task progress"
+      aria-label={`View today's task progress: ${completedTasks} of ${totalTasks} tasks completed, ${percentage}%`}
+      aria-describedby="motivation-text"
       onClick={() => navigate('/tracker')}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && navigate('/tracker')}
     >
-      <div className="progress-ring" role="img" aria-label={`Progress circle showing ${percentage}% completion`}>
+      <div
+        className="progress-ring"
+        role="img"
+        aria-label={`Progress circle showing ${percentage}% completion`}
+      >
         <svg
           viewBox={`0 0 ${radius * 2} ${radius * 2}`}
           preserveAspectRatio="xMidYMid meet"
@@ -62,7 +67,7 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
             cy={radius}
           />
           <circle
-            stroke="url(#progressGradient)"
+            stroke={strokeColor}
             fill="transparent"
             strokeWidth={stroke}
             strokeLinecap="round"
@@ -85,10 +90,17 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
         <p className="task-stats">
           <strong>{completedTasks}</strong> of <strong>{totalTasks}</strong> tasks completed
         </p>
-        <p className="task-motivation" style={{ color: textColor }}>
+        <p
+          id="motivation-text"
+          className="task-motivation"
+          style={{ color: textColor }}
+          aria-live="polite"
+        >
           {message}
         </p>
-        <p className="task-meta">Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+        <p className="task-meta">
+          Updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+        </p>
       </div>
     </div>
   );

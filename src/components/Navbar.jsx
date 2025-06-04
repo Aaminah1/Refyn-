@@ -19,22 +19,27 @@ function Navbar({ user, handleLogout }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Close menu when navigating to another route
+  useEffect(() => {
+    setShowMenu(false);
+  }, [location.pathname]);
+
   const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="navbar" aria-label="Main navigation">
       <Link to="/" className="logo" role="heading" aria-level="1">✔ Refyn</Link>
 
-
       <div className="navbar-right">
         <div className="nav-links" role="menubar">
-          {[
+          {[ 
             { name: 'Home', path: '/' },
             { name: 'Tracker', path: '/tracker' },
             { name: 'Routines', path: '/routines' },
             { name: 'Library', path: '/library' }
           ].map(({ name, path }) => (
             <button
+              type="button"
               key={name}
               onClick={() => navigate(path)}
               className={isActive(path) ? 'active' : ''}
@@ -49,10 +54,12 @@ function Navbar({ user, handleLogout }) {
 
         <div className="menu-container" ref={menuRef}>
           <button
+            type="button"
             onClick={() => setShowMenu((prev) => !prev)}
             className={`nav-links-button profile-toggle ${isActive('/settings') || showMenu ? 'active' : ''}`}
             aria-haspopup="menu"
             aria-expanded={showMenu}
+            aria-controls="user-menu"
             aria-label="Open user settings"
           >
             <User className="menu-icon-desktop" />
@@ -60,8 +67,9 @@ function Navbar({ user, handleLogout }) {
           </button>
 
           {showMenu && (
-            <div className="dropdown-menu" role="menu" aria-label="User settings">
+            <div className="dropdown-menu" id="user-menu" role="menu" aria-label="User settings">
               <button
+                type="button"
                 onClick={() => {
                   navigate('/settings');
                   setShowMenu(false);
@@ -73,6 +81,7 @@ function Navbar({ user, handleLogout }) {
                 Settings
               </button>
               <button
+                type="button"
                 onClick={handleLogout}
                 className="logout-btn"
                 role="menuitem"

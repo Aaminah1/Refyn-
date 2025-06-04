@@ -11,46 +11,58 @@ function Auth({ onLogin }) {
   const [mode, setMode] = useState('login');
   const [error, setError] = useState('');
   const [accountCreated, setAccountCreated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    setLoading(true);
 
-    if (mode === 'login') {
-      if (!users[username] || users[username] !== password) {
-        setError('Invalid credentials. Check username and password');
+    setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+      if (mode === 'login') {
+        if (!users[username] || users[username] !== password) {
+          setError('Invalid credentials. Check username and password');
+          setLoading(false);
+        } else {
+          setError('');
+          setLoading(false);
+          onLogin(username);
+        }
       } else {
-        setError('');
-        onLogin(username);
+        if (username.length < 3) {
+          setError('Username must be at least 3 characters long.');
+          setLoading(false);
+          return;
+        }
+        if (password.length < 6) {
+          setError('Password must be at least 6 characters long.');
+          setLoading(false);
+          return;
+        }
+        if (password !== confirmPassword) {
+          setError('Passwords do not match.');
+          setLoading(false);
+          return;
+        }
+        if (users[username]) {
+          setError('Username already exists.');
+          setLoading(false);
+        } else {
+          users[username] = password;
+          localStorage.setItem('users', JSON.stringify(users));
+          setAccountCreated(true);
+          setError('');
+          setMode('login');
+          setUsername('');
+          setPassword('');
+          setConfirmPassword('');
+          setShowLoginPassword(false);
+          setShowSignupPassword(false);
+          setLoading(false);
+        }
       }
-    } else {
-      if (username.length < 3) {
-        setError('Username must be at least 3 characters long.');
-        return;
-      }
-      if (password.length < 6) {
-        setError('Password must be at least 6 characters long.');
-        return;
-      }
-      if (password !== confirmPassword) {
-        setError('Passwords do not match.');
-        return;
-      }
-      if (users[username]) {
-        setError('Username already exists.');
-      } else {
-        users[username] = password;
-        localStorage.setItem('users', JSON.stringify(users));
-        setAccountCreated(true);
-        setError('');
-        setMode('login');
-        setUsername('');
-        setPassword('');
-        setConfirmPassword('');
-        setShowLoginPassword(false);
-        setShowSignupPassword(false);
-      }
-    }
+    }, 800); // Simulated delay
   };
 
   const renderPasswordField = (value, setter, placeholder, id, show, setShow) => (
@@ -140,8 +152,13 @@ function Auth({ onLogin }) {
           </>
         )}
 
-        <button type="submit" aria-label={mode === 'login' ? 'Submit login form' : 'Submit signup form'}>
-          {mode === 'login' ? 'Log In' : 'Sign Up'}
+        <button
+          type="submit"
+          disabled={loading}
+          aria-label={mode === 'login' ? 'Submit login form' : 'Submit signup form'}
+        >
+         {loading ? <span className="spinner"></span> : mode === 'login' ? 'Log In' : 'Sign Up'}
+
         </button>
       </form>
 

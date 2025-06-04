@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import libraryItems from '../data/libraryData';
 import './RoutineDetails.css';
@@ -8,7 +8,23 @@ function RoutineDetails({ routines, trackerTasks, onToggleTask, onAddRoutine }) 
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const routine = libraryItems.find(r => r.id === Number(id));
+
+  if (isLoading) {
+    return (
+      <div className="loader-container" role="status" aria-label="Loading routine">
+        <div className="spinner" />
+      </div>
+    );
+  }
+
   if (!routine) return <p role="alert">Routine not found.</p>;
 
   const isAlreadyAdded = routines.some(r => r.id === routine.id);
@@ -32,15 +48,13 @@ function RoutineDetails({ routines, trackerTasks, onToggleTask, onAddRoutine }) 
 
   return (
     <div className="routine-details-container" role="region" aria-labelledby="routine-title">
-
-    <div className="routine-header">
-  <div className="routine-title-row">
-    <button onClick={() => navigate(-1)} className="back-btn" aria-label="Go back">
-      <ArrowLeft size={22} strokeWidth={2.2} />
-    </button>
-    <h1 id="routine-title" className="routine-title">{routine.title}</h1>
-  </div>
-
+      <div className="routine-header">
+        <div className="routine-title-row">
+          <button onClick={() => navigate(-1)} className="back-btn" aria-label="Go back">
+            <ArrowLeft size={22} strokeWidth={2.2} />
+          </button>
+          <h1 id="routine-title" className="routine-title">{routine.title}</h1>
+        </div>
 
         <span className="category-tag" role="note" aria-label={`Routine category: ${routine.category}`}>{routine.category}</span>
         <div className="routine-meta">
@@ -68,15 +82,22 @@ function RoutineDetails({ routines, trackerTasks, onToggleTask, onAddRoutine }) 
             <div className="task-box">
               <div className="task-title-row">
                 {isAlreadyAdded && (
-                  <input
-                    type="checkbox"
-                    checked={selectedTaskIds.includes(task.id)}
-                    onChange={() => onToggleTask(task, routine)}
-                    aria-label={`Mark task '${task.title}'`}
-                    className="clickable-checkbox"
-                  />
+                  <>
+                    <input
+                      id={`task-${task.id}`}
+                      type="checkbox"
+                      checked={selectedTaskIds.includes(task.id)}
+                      onChange={() => onToggleTask(task, routine)}
+                      className="clickable-checkbox"
+                    />
+                    <label htmlFor={`task-${task.id}`} className="task-title">
+                      {task.title}
+                    </label>
+                  </>
                 )}
-                <span className="task-title">{task.title}</span>
+                {!isAlreadyAdded && (
+                  <span className="task-title">{task.title}</span>
+                )}
               </div>
               {task.steps && (
                 <ol className="step-list">

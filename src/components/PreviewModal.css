@@ -1,152 +1,94 @@
-/* PreviewModal.css */
-
 .preview-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-  padding: 1rem;
-  overflow: auto;
-}
-
-.preview-modal img {
-  max-width: 90%;
-  max-height: 80%;
-}
-
-.preview-caption {
-  color: white;
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.preview-nav {
-  margin-top: 1rem;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.preview-icon-button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.preview-icon-button:hover {
-  color: #f03e3e;
-}
-
-.preview-icon-button:active {
-  color: #c92a2a;
-}
-
-.preview-icon-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-  color: white;
 }
 
 .preview-close-button {
   position: absolute;
-  top: 7rem;
-  right: 30rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
+  top: 1rem;
+  right: 1rem;
   z-index: 1001;
+}
+
+.preview-image-wrapper {
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.preview-caption {
+  margin-top: 0.75rem;
+  color: white;
+  font-size: 1rem;
+}
+
+.preview-loading-spinner {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.preview-nav-button,
+.preview-close-button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
   transition: color 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  outline: none;
 }
 
-/* Tablet (width <= 1024px) */
-@media (max-width: 1024px) {
-  .preview-close-button {
-    top: 20rem;
-    right: 10rem;
-  }
-}
-
-/* Mobile (width <= 600px) */
-@media (max-width: 600px) {
-  .preview-close-button {
-    top: 8rem;
-    right: 3rem;
-  }
-}
-.preview-close-button:hover {
+.preview-nav-button:hover,
+.preview-close-button:hover,
+.preview-nav-button:focus-visible,
+.preview-close-button:focus-visible,
+.preview-nav-button:active,
+.preview-close-button:active {
   color: #f03e3e;
 }
 
-.preview-close-button:active {
-  color: #c92a2a;
-}
-
-
-/* Tablet (max-width: 1024px) */
-@media (max-width: 1024px) {
-  .preview-modal {
-    padding: 1.5rem;
-  }
-
-  .preview-modal img {
-    max-height: 70vh;
-  }
-
-  .preview-caption {
-    font-size: 1rem;
-    margin-top: 0.75rem;
-  }
-
-  .preview-icon-button svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .preview-close-button svg {
-    width: 24px;
-    height: 24px;
+@media (hover: none) {
+  .preview-nav-button:active,
+  .preview-close-button:active {
+    color: #f03e3e !important;
   }
 }
 
-/* Mobile (max-width: 600px) */
-@media (max-width: 600px) {
-  .preview-modal {
-    padding: 1rem;
-    justify-content: flex-start; /* Shift content downward */
-  }
+.preview-nav-button.left {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
 
-  .preview-modal img {
-    max-width: 100%;
-    max-height: 60vh;
-    margin-top: 9rem; /* Push down below nav */
-  }
+.preview-nav-button.right {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
 
-  .preview-caption {
-    font-size: 0.95rem;
-    padding: 0 1rem;
-    margin-top: 0.75rem;
-  }
+.preview-nav-button svg,
+.preview-close-button svg {
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
 
-  .preview-nav {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.75rem;
-  }
-
-  
-
-  .preview-icon-button svg {
-    width: 24px;
-    height: 24px;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

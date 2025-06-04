@@ -5,9 +5,7 @@ import { Search } from 'lucide-react';
 function SearchBar({ value, onChange }) {
   return (
     <div className="search-bar-wrapper" role="search">
-      <label htmlFor="search-input" className="sr-only">
-       
-      </label>
+  
       <Search className="search-icon" size={18} aria-hidden="true" />
       <input
         type="text"

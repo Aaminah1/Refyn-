@@ -90,7 +90,10 @@ function RoutineCard({ routine, onDelete, onFrequencyChange }) {
               <option key={freq} value={freq}>{freq}</option>
             ))}
           </select>
-          <small id={`freq-desc-${routine.id}`} className="sr-only" />
+          <small id={`freq-desc-${routine.id}`} className="sr-only">
+  Select how often you want to repeat this routine
+</small>
+
         </div>
 
         <button

@@ -1,16 +1,18 @@
 import React from 'react';
 import './TrackerTabs.css';
 
-function TrackerTabs({ activeTab, onTabChange }) {
-  const tabs = [
-    { id: 'today', label: "Today's Tasks" },
-    { id: 'progress', label: 'Progress' }
-  ];
+// Default tab configuration
+const DEFAULT_TABS = [
+  { id: 'today', label: "Today's Tasks" },
+  { id: 'progress', label: 'Progress' }
+];
 
+function TrackerTabs({ activeTab, onTabChange, tabs = DEFAULT_TABS }) {
   const handleKeyDown = (e, currentIndex) => {
-    const nextIndex = e.key === 'ArrowRight' ? (currentIndex + 1) % tabs.length
-                     : e.key === 'ArrowLeft' ? (currentIndex - 1 + tabs.length) % tabs.length
-                     : null;
+    const nextIndex =
+      e.key === 'ArrowRight' ? (currentIndex + 1) % tabs.length
+      : e.key === 'ArrowLeft' ? (currentIndex - 1 + tabs.length) % tabs.length
+      : null;
 
     if (nextIndex !== null) {
       e.preventDefault();

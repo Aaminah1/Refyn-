@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import './PreviewModal.css';
 
 function PreviewModal({ image, caption, onClose, onPrev, onNext, hasPrev, hasNext }) {
   const modalRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     modalRef.current?.focus();
@@ -32,31 +33,42 @@ function PreviewModal({ image, caption, onClose, onPrev, onNext, hasPrev, hasNex
         <X size={28} />
       </button>
 
-      <img
-        src={image}
-        alt="User progress preview"
-        onClick={(e) => e.stopPropagation()}
-      />
-
-      <p className="preview-caption">{caption}</p>
-
-      <div className="preview-nav">
+      {hasPrev && (
         <button
+          className="preview-nav-button left"
           onClick={(e) => { e.stopPropagation(); onPrev(); }}
-          disabled={!hasPrev}
           aria-label="Previous image"
-          className="preview-icon-button"
         >
-          <ChevronLeft size={32} />
+          <ChevronLeft size={28} />
         </button>
+      )}
+
+      {hasNext && (
         <button
+          className="preview-nav-button right"
           onClick={(e) => { e.stopPropagation(); onNext(); }}
-          disabled={!hasNext}
           aria-label="Next image"
-          className="preview-icon-button"
         >
-          <ChevronRight size={32} />
+          <ChevronRight size={28} />
         </button>
+      )}
+
+      <div className="preview-image-wrapper">
+        {loading && (
+          <div className="preview-loading-spinner" aria-live="polite">
+            Loading image...
+          </div>
+        )}
+        <img
+          src={image}
+          alt={caption || 'Preview image'}
+          onClick={(e) => e.stopPropagation()}
+          onLoad={() => setLoading(false)}
+          style={{ display: loading ? 'none' : 'block' }}
+        />
+        {!loading && caption && (
+          <p className="preview-caption">{caption}</p>
+        )}
       </div>
     </div>
   );

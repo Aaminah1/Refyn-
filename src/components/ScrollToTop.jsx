@@ -5,13 +5,16 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Focus main content for screen readers after route change
-    const main = document.getElementById('main-content');
-    if (main) {
-      main.focus();
-    }
+      // Move keyboard focus to main content after route change
+      // Improves accessibility for screen readers and keyboard users
+      const main = document.getElementById('main-content');
+      if (main) {
+        main.focus();
+      }
+    });
   }, [pathname]);
 
   return null;

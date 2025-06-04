@@ -63,4 +63,7 @@
   .bottom-nav button.active {
     color: #b00020; /* Darker red for better contrast */
   }
+}.bottom-nav button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }

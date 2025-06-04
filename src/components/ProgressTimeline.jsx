@@ -159,6 +159,7 @@ function ProgressTimeline({
 
       {previewIndex !== null && (
         <PreviewModal
+        key={sortedImages[previewIndex].url} 
           image={sortedImages[previewIndex].url}
           caption={sortedImages[previewIndex].caption}
           onClose={() => setPreviewIndex(null)}

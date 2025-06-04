@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TaskInfoModal from './TaskInfoModal';
 import './TodayTasks.css';
 import { ChevronDown } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { useCelebrateConfetti } from '../hooks/useCelebrateConfetti';
 
 function TodayTasks({
   selectedDate,
@@ -16,28 +16,11 @@ function TodayTasks({
   const [recentlyCompleted, setRecentlyCompleted] = useState([]);
   const [expandedTaskId, setExpandedTaskId] = useState(null);
 
-  // localStorage key for confetti per-day
-  const celebrationKey = `${selectedDate.toDateString()}-celebrated`;
-  const [celebrated, setCelebrated] = useState(() => {
-    return localStorage.getItem(celebrationKey) === 'true';
-  });
-
-  // Reset expanded task and update confetti state when date changes
-  useEffect(() => {
-    setExpandedTaskId(null);
-    const alreadyCelebrated = localStorage.getItem(celebrationKey) === 'true';
-    setCelebrated(alreadyCelebrated);
-  }, [selectedDate, celebrationKey]);
-
   const handleCheck = (taskId) => {
     if (!completedTasks.includes(taskId)) {
       setCompletedTasks((prev) => [...prev, taskId]);
       setRecentlyCompleted((prev) => [...prev, taskId]);
-
-      if (expandedTaskId === taskId) {
-        setExpandedTaskId(null);
-      }
-
+      if (expandedTaskId === taskId) setExpandedTaskId(null);
       setTimeout(() => {
         setRecentlyCompleted((prev) => prev.filter((id) => id !== taskId));
       }, 1500);
@@ -51,6 +34,7 @@ function TodayTasks({
   };
 
   const tasks = getTodayTasks();
+  useCelebrateConfetti(selectedDate, tasks, completedTasks);
 
   const activeTasks = tasks.filter(
     (task) => !completedTasks.includes(task.id) || recentlyCompleted.includes(task.id)
@@ -59,31 +43,6 @@ function TodayTasks({
   const doneTasks = tasks.filter(
     (task) => completedTasks.includes(task.id) && !recentlyCompleted.includes(task.id)
   );
-
-  // Confetti logic — only once per day
-  useEffect(() => {
-    if (
-      tasks.length > 0 &&
-      completedTasks.length === tasks.length &&
-      !celebrated
-    ) {
-      const duration = 1500;
-      const end = Date.now() + duration;
-
-      const frame = () => {
-        confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 } });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      };
-
-      frame();
-      localStorage.setItem(celebrationKey, 'true'); // store flag
-      setCelebrated(true);
-    }
-  }, [completedTasks, tasks, celebrated, celebrationKey]);
 
   return (
     <div className="today-tasks-container">
@@ -105,12 +64,15 @@ function TodayTasks({
           activeTasks.map((task) => (
             <div key={task.id}>
               <div className={`task-card ${recentlyCompleted.includes(task.id) ? 'fade-out' : ''}`}>
-                <label className="task-label">
+                <label className="task-label" htmlFor={`task-${task.id}`}>
                   <span className={`task-title ${completedTasks.includes(task.id) ? 'completed' : ''}`}>
                     <input
+                      id={`task-${task.id}`}
                       type="checkbox"
                       checked={completedTasks.includes(task.id)}
                       onChange={() => handleCheck(task.id)}
+                      aria-checked={completedTasks.includes(task.id)}
+                      aria-label={`Mark task "${task.title}" as ${completedTasks.includes(task.id) ? 'incomplete' : 'complete'}`}
                     />{' '}
                     {task.title}
                   </span>
@@ -119,7 +81,9 @@ function TodayTasks({
                 <button
                   className="task-expand-btn"
                   onClick={() => toggleExpanded(task.id)}
-                  aria-label="Toggle instructions"
+                  aria-label={`Toggle steps for task: ${task.title}`}
+                  aria-expanded={expandedTaskId === task.id}
+                  aria-controls={`steps-${task.id}`}
                 >
                   <ChevronDown
                     size={18}
@@ -130,9 +94,12 @@ function TodayTasks({
 
               {expandedTaskId === task.id && (
                 <div
+                  id={`steps-${task.id}`}
                   className={`task-steps-panel 
                     ${completedTasks.includes(task.id) ? 'done' : ''} 
                     ${recentlyCompleted.includes(task.id) ? 'fade-out' : ''}`}
+                  role="region"
+                  aria-label={`Steps for task: ${task.title}`}
                 >
                   <ul>
                     {task.steps?.length > 0 ? (
@@ -148,7 +115,9 @@ function TodayTasks({
         ) : tasks.length === 0 ? (
           <p className="no-tasks-message">No tasks scheduled for this day</p>
         ) : (
-          <p className="all-done-message">🎉 Well done! All tasks completed for today.</p>
+          <p className="all-done-message" role="status" aria-live="polite">
+            🎉 Well done! All tasks completed for today.
+          </p>
         )}
       </div>
 
@@ -159,12 +128,15 @@ function TodayTasks({
           {doneTasks.map((task) => (
             <div key={task.id}>
               <div className="task-card">
-                <label className="task-label">
+                <label className="task-label" htmlFor={`done-${task.id}`}>
                   <span className="task-title completed">
                     <input
+                      id={`done-${task.id}`}
                       type="checkbox"
                       checked
                       onChange={() => handleCheck(task.id)}
+                      aria-checked="true"
+                      aria-label={`Uncheck task: ${task.title}`}
                     />{' '}
                     {task.title}
                   </span>
@@ -173,7 +145,9 @@ function TodayTasks({
                 <button
                   className="task-expand-btn"
                   onClick={() => toggleExpanded(task.id)}
-                  aria-label="Toggle instructions"
+                  aria-label={`Toggle steps for completed task: ${task.title}`}
+                  aria-expanded={expandedTaskId === task.id}
+                  aria-controls={`steps-${task.id}`}
                 >
                   <ChevronDown
                     size={18}
@@ -183,7 +157,12 @@ function TodayTasks({
               </div>
 
               {expandedTaskId === task.id && (
-                <div className="task-steps-panel done">
+                <div
+                  id={`steps-${task.id}`}
+                  className="task-steps-panel done"
+                  role="region"
+                  aria-label={`Steps for completed task: ${task.title}`}
+                >
                   <ul>
                     {task.steps?.length > 0 ? (
                       task.steps.map((step, idx) => <li key={idx}>{step}</li>)

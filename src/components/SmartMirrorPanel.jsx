@@ -49,11 +49,13 @@ function SmartMirrorPanel({ todayTasks, completedTasks }) {
     >
       <h2 id="mirror-heading" className="sr-only">Smart Mirror Panel</h2>
 
-      <Tooltip text={isPlaying ? 'Turn off ambient sound' : 'Turn on ambient sound'}>
+     <Tooltip text={isPlaying ? 'Turn off ambient sound' : 'Turn on ambient sound'}>
   <button
-    className="mirror-sound-toggle"
+    className={`mirror-sound-toggle ${isPlaying ? 'playing' : ''}`}
     onClick={toggleAudio}
     aria-label={isPlaying ? "Turn off ambient sound" : "Turn on ambient sound"}
+    aria-pressed={isPlaying}
+    title={isPlaying ? "Sound is on" : "Sound is off"}
   >
     {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
   </button>

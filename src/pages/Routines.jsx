@@ -12,8 +12,16 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
   const [isFading, setIsFading] = useState(false);
   const [hasPageChanged, setHasPageChanged] = useState(false);
   const [sortOption, setSortOption] = useState('recent');
+  const [hasWaited, setHasWaited] = useState(false);
 
   const itemsPerPage = 6;
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasWaited(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const isLoading = routines.length === 0 && !hasWaited;
 
   const sortedRoutines = useMemo(() => {
     let sorted = [...routines];
@@ -21,8 +29,6 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === 'newest') {
       sorted.reverse();
-    } else if (sortOption === 'oldest') {
-      // already sorted by creation by default
     }
     return sorted;
   }, [routines, sortOption]);
@@ -87,15 +93,16 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
         </p>
       </div>
 
-      {routines.length === 0 ? (
+      {isLoading ? (
+        <div className="loader-container" role="status" aria-label="Loading routines">
+          <div className="spinner" />
+        </div>
+      ) : routines.length === 0 ? (
         <section aria-label="No routines added" className="no-routines-msg">
           <p>You haven’t added any routines yet. Add them from the library.</p>
         </section>
       ) : (
-        <section
-          className={`routine-results ${isFading ? 'fade-out' : ''}`}
-          aria-label="List of user routines"
-        >
+        <section className={`routine-results ${isFading ? 'fade-out' : ''}`} aria-label="List of user routines">
           {paginatedRoutines.map((routine) => (
             <RoutineCard
               key={routine.id}
@@ -113,7 +120,7 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
         </section>
       )}
 
-      {routines.length > itemsPerPage && (
+      {routines.length > itemsPerPage && !isLoading && (
         <nav className="pagination-controls" role="navigation" aria-label="Pagination">
           <button
             className="pagination-button"

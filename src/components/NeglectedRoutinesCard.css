@@ -1,5 +1,9 @@
 .neglected-routines {
-  margin-top: 0.5rem;
+  margin-top: 0.5rem; background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+ transition: background 0.2s ease;
+  cursor: pointer;
 }
 
 .neglected-list {

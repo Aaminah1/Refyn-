@@ -13,24 +13,29 @@ function LibraryRoutineCard({ routine, isAlreadyAdded, onAddRoutine, onNavigate 
     <article
       className="library-card"
       tabIndex="0"
-      aria-label={`Routine titled ${routine.title}, category ${routine.category}. ${routine.description}`}
       role="group"
+      aria-labelledby={`routine-title-${routine.id}`}
+      aria-describedby={`routine-desc-${routine.id}`}
     >
-      <h3>{routine.title}</h3>
+      <h3 id={`routine-title-${routine.id}`}>{routine.title}</h3>
       <p className="category-pill">{routine.category}</p>
-      <p className="description">{routine.description}</p>
+      <p className="description" id={`routine-desc-${routine.id}`}>{routine.description}</p>
 
-      <div className="library-button-row"><button
-          onClick={onNavigate}
+      <div className="library-button-row">
+        <button
+          type="button"
+          onClick={() => onNavigate?.()}
           className="btn-secondary"
           aria-label={`View more details about ${routine.title}`}
         >
           View Details
         </button>
+
         {isAlreadyAdded ? (
           <div className="added-pill" role="status" aria-live="polite">
-            ✔ Added to{" "}
+            ✔ Added to{' '}
             <button
+              type="button"
               onClick={handleNavigateToRoutines}
               className="go-link"
               aria-label={`Go to your routines to view ${routine.title}`}
@@ -40,15 +45,14 @@ function LibraryRoutineCard({ routine, isAlreadyAdded, onAddRoutine, onNavigate 
           </div>
         ) : (
           <button
-            onClick={onAddRoutine}
+            type="button"
+            onClick={() => onAddRoutine?.()}
             className="btn-primary"
             aria-label={`Add ${routine.title} to My Routines`}
           >
             + Add to My Routines
           </button>
         )}
-
-        
       </div>
     </article>
   );

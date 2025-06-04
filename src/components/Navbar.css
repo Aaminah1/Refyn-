@@ -23,7 +23,8 @@
 .logo {
   font-weight: 700;
   font-size: 1.5rem;
-  color: #111;
+  text-decoration: none;
+  color: inherit; /* optional: keep it styled like text */
 }
 
 /* --- Nav Links --- */

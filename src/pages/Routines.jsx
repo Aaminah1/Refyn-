@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackToTopButton from '../components/BackToTopButton';
 import RoutineCard from '../components/RoutineCard';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, SortAsc } from 'lucide-react';
 import './Routines.css';
 
 function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }) {
@@ -11,14 +11,28 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
   const [currentPage, setCurrentPage] = useState(1);
   const [isFading, setIsFading] = useState(false);
   const [hasPageChanged, setHasPageChanged] = useState(false);
+  const [sortOption, setSortOption] = useState('recent');
 
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(routines.length / itemsPerPage);
+
+  const sortedRoutines = useMemo(() => {
+    let sorted = [...routines];
+    if (sortOption === 'alphabetical') {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === 'newest') {
+      sorted.reverse();
+    } else if (sortOption === 'oldest') {
+      // already sorted by creation by default
+    }
+    return sorted;
+  }, [routines, sortOption]);
+
+  const totalPages = Math.ceil(sortedRoutines.length / itemsPerPage);
 
   const paginatedRoutines = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
-    return routines.slice(start, start + itemsPerPage);
-  }, [routines, currentPage]);
+    return sortedRoutines.slice(start, start + itemsPerPage);
+  }, [sortedRoutines, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -46,11 +60,32 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
 
   return (
     <div className="routines-page" role="main" aria-labelledby="routines-heading">
-      <h1 id="routines-heading">Your Routines</h1>
-      <p className="routines-subtext">Edit frequency, view tasks, or remove them</p>
-      <p className="routines-count">
-        You’ve added <strong>{routines.length}</strong> {routines.length === 1 ? 'routine' : 'routines'}.
-      </p>
+      <div className="library-top subtle">
+        <h1 id="routines-heading" className="library-heading">Your Routines</h1>
+        <p className="library-subheading">Edit frequency, view tasks, or remove them</p>
+
+        <div className="sort-dropdown">
+          <label htmlFor="sort-select">
+            <SortAsc size={18} style={{ marginRight: '0.4rem', verticalAlign: 'middle' }} aria-hidden="true" />
+            Sort by:
+          </label>
+          <select
+            id="sort-select"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            aria-label="Sort routines"
+          >
+            <option value="recent">Default</option>
+            <option value="alphabetical">A – Z </option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+
+        <p className="routines-count">
+          You’ve added <strong>{routines.length}</strong> {routines.length === 1 ? 'routine' : 'routines'}.
+        </p>
+      </div>
 
       {routines.length === 0 ? (
         <section aria-label="No routines added" className="no-routines-msg">
@@ -58,7 +93,7 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
         </section>
       ) : (
         <section
-          className={`routine-list ${isFading ? 'fade-out' : ''}`}
+          className={`routine-results ${isFading ? 'fade-out' : ''}`}
           aria-label="List of user routines"
         >
           {paginatedRoutines.map((routine) => (
@@ -67,7 +102,7 @@ function Routines({ routines, trackerTasks, onDeleteRoutine, onUpdateFrequency }
               routine={routine}
               trackerTasks={trackerTasks}
               onDelete={onDeleteRoutine}
-            onFrequencyChange={onUpdateFrequency}
+              onFrequencyChange={onUpdateFrequency}
               onView={() =>
                 window.dispatchEvent(new CustomEvent('navigate', {
                   detail: `/routine/${routine.id}`

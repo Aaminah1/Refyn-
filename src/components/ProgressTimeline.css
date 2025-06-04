@@ -3,6 +3,7 @@
   padding: 1rem 0.5rem;
   max-width: 100%;
   box-sizing: border-box;
+  padding-bottom: 6rem; 
 }
 
 /* Card should also stretch more */
@@ -31,6 +32,10 @@
 }
 /* MOBILE scroll behavior + fade indicator */
 @media (max-width: 600px) {
+  .progress-timeline-container {
+    padding-bottom: 8rem; /* Leaves space for the fixed Upload button */
+  }
+  
   .routine-categories-wrapper {
     position: relative;
     overflow: hidden;
@@ -116,8 +121,9 @@
 .timeline-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; position: relative; /* ⬅️ Needed for the ::before */
-  padding-left: 30px;  /* ⬅️ Makes space for the line */
+  gap: 1.5rem; position: relative;
+  padding-left: 30px;  
+  margin-bottom: 6rem;
 }
 
 .timeline-wrapper::before {
@@ -127,7 +133,7 @@
   bottom: 0;
   left: 47px;
   width: 2px;
-  background-color: #e0e0e0; /* light gray timeline */
+  background-color: #e0e0e0; 
   z-index: 0;
 }
 

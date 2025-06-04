@@ -103,7 +103,12 @@ function Auth({ onLogin }) {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+         onChange={(e) => {
+  const input = e.target.value;
+  const formatted = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+  setUsername(formatted);
+}}
+
           required
           aria-required="true"
           autoComplete="username"

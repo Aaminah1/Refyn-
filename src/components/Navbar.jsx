@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './Navbar.css';
 import { User } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 function Navbar({ user, handleLogout }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,9 +23,8 @@ function Navbar({ user, handleLogout }) {
 
   return (
     <nav className="navbar" aria-label="Main navigation">
-      <div className="navbar-left">
-        <span className="logo" role="heading" aria-level="1">✔ Refyn</span>
-      </div>
+      <Link to="/" className="logo" role="heading" aria-level="1">✔ Refyn</Link>
+
 
       <div className="navbar-right">
         <div className="nav-links" role="menubar">

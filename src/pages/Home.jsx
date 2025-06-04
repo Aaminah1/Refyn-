@@ -5,6 +5,7 @@ import RecentProgressCard from '../components/RecentProgressCard';
 import DashboardRoutineCard from '../components/DashboardRoutineCard';
 import './Home.css';
 import { Link } from 'react-router-dom';
+import calendarImg from '../assets/onboarding-calendar.png';
 
 
 function Home() {
@@ -58,23 +59,24 @@ function Home() {
         <div className="onboarding-card">
           <div className="onboarding-content">
             <img
-              src="/images/onboarding-calendar.png"
-              alt=""
-              aria-hidden="true"
-              className="onboarding-illustration"
-            />
+  src={calendarImg}
+  alt="Calendar illustration"
+  aria-hidden="true"
+  className="onboarding-illustration"
+/>
             <div className="onboarding-text">
               <p className="onboarding-welcome" id="welcome-heading">Welcome, {user}</p>
               <h1>Refyn Your Routine</h1>
               <p className="onboarding-subtext">
                 Begin your glow-up journey by exploring routines that fit your goals.
               </p>
-              <img
-                src="/images/onboarding-calendar.png"
-                alt=""
-                aria-hidden="true"
-                className="onboarding-image-inline"
-              />
+             <img
+  src={calendarImg}
+  alt="Calendar illustration"
+  aria-hidden="true"
+  className="onboarding-image-inline"
+/>
+
               <Link
   to="/library"
   className="onboarding-btn"

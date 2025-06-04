@@ -1,0 +1,43 @@
+.neglected-routines {
+  margin-top: 0.5rem;
+}
+
+.neglected-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.neglected-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.neglected-item:last-child {
+  border-bottom: none;
+}
+
+.routine-name {
+  font-weight: 500;
+  color: #111;
+}
+
+.routine-status {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #c0392b;
+}
+
+.routine-empty-msg {
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+  margin-top: 0.5rem;
+}

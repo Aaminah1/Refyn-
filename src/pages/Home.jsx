@@ -2,11 +2,12 @@ import React from 'react';
 import { useRefyn } from '../context/RefynContext';
 import TodayTaskSummary from '../components/TodayTaskSummary';
 import RecentProgressCard from '../components/RecentProgressCard';
-import DashboardRoutineCard from '../components/DashboardRoutineCard';
+import NeglectedRoutinesCard from '../components/NeglectedRoutinesCard';
+
+import SmartMirrorPanel from '../components/SmartMirrorPanel'; 
 import './Home.css';
 import { Link } from 'react-router-dom';
 import calendarImg from '../assets/onboarding-calendar.png';
-
 
 function Home() {
   const { user, routines, trackerTasks, progressImages } = useRefyn();
@@ -59,32 +60,30 @@ function Home() {
         <div className="onboarding-card">
           <div className="onboarding-content">
             <img
-  src={calendarImg}
-  alt="Calendar illustration"
-  aria-hidden="true"
-  className="onboarding-illustration"
-/>
+              src={calendarImg}
+              alt="Calendar illustration"
+              aria-hidden="true"
+              className="onboarding-illustration"
+            />
             <div className="onboarding-text">
               <h2 className="onboarding-welcome" id="welcome-heading">Welcome, {user}</h2>
               <h1>Refyn Your Routine</h1>
               <p className="onboarding-subtext">
                 Begin your glow-up journey by exploring routines that fit your goals.
               </p>
-             <img
-  src={calendarImg}
-  alt="Calendar illustration"
-  aria-hidden="true"
-  className="onboarding-image-inline"
-/>
-
+              <img
+                src={calendarImg}
+                alt="Calendar illustration"
+                aria-hidden="true"
+                className="onboarding-image-inline"
+              />
               <Link
-  to="/library"
-  className="onboarding-btn"
-  aria-label="Explore routines in the library"
->
-  Explore routines →
-</Link>
-
+                to="/library"
+                className="onboarding-btn"
+                aria-label="Explore routines in the library"
+              >
+                Explore routines →
+              </Link>
             </div>
           </div>
         </div>
@@ -93,46 +92,31 @@ function Home() {
           <h1 id="welcome-heading">Welcome back, {user}</h1>
           <p>Here’s what’s happening today in your Refyn journey:</p>
 
+          {/* Smart Mirror Panel Section */}
+          <div className="smart-mirror-wrapper">
+            <SmartMirrorPanel todayTasks={todayTasks} completedTasks={completedTasks} />
+          </div>
+
           <div className="dashboard-grid">
 
             {/* Task Progress Summary */}
-           <section aria-labelledby="task-summary-heading">
-
+            <section aria-labelledby="task-summary-heading">
               <h2 id="task-summary-heading" className="section-title">Today’s Progress</h2>
               <TodayTaskSummary
                 totalTasks={todayTasks.length}
                 completedTasks={completedTasks.length}
               />
-             <Link
-  to="/tracker"
-  className="manage-routines-link"
-  aria-label="Go to today's task tracker"
->
-  Go to Tracker →
-</Link>
+              <Link
+                to="/tracker"
+                className="manage-routines-link"
+                aria-label="Go to today's task tracker"
+              >
+                Go to Tracker →
+              </Link>
             </section>
 
-            {/* Latest Routine */}
-          <section aria-labelledby="latest-routine-heading">
-
-              <h2 id="latest-routine-heading" className="section-title">Latest Routine</h2>
-              {routines.length > 0 ? (
-                <DashboardRoutineCard routine={routines[routines.length - 1]} />
-              ) : (
-                <p>You haven’t added any routines yet.</p>
-              )}
-             <Link
-  to="/routines"
-  className="manage-routines-link"
-  aria-label="Manage your added routines"
->
-  Manage Routines →
-</Link>
-            </section>
-
-            {/* Recent Progress */}
-         <section aria-labelledby="recent-progress-heading">
-
+ {/* Recent Progress */}
+            <section aria-labelledby="recent-progress-heading">
               <h2 id="recent-progress-heading" className="section-title">Recent Progress</h2>
               <RecentProgressCard
                 latestImages={latestImages}
@@ -141,15 +125,34 @@ function Home() {
                 topRoutine={topRoutine}
                 topRoutineCount={topRoutineCount}
               />
-             <Link
-  to="/tracker?tab=progress"
-  className="manage-routines-link"
-  aria-label="View all uploaded progress"
->
-  View All →
-</Link>
-
+              <Link
+                to="/tracker?tab=progress"
+                className="manage-routines-link"
+                aria-label="View all uploaded progress"
+              >
+                View All →
+              </Link>
             </section>
+
+
+
+          {/* Neglected Routines */}
+<section aria-labelledby="neglected-routines-heading">
+  <h2 id="neglected-heading" className="section-title">⚠️ Routines You’re Ignoring</h2>
+
+  <NeglectedRoutinesCard routines={routines} progressImages={progressImages} />
+   <Link
+          to="/routines"
+          className="manage-routines-link"
+          aria-label="Manage your added routines"
+        >
+          Manage Routines →
+        </Link>
+     
+</section>
+
+
+           
 
           </div>
         </div>

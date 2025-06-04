@@ -8,7 +8,7 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
   const percentage = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
   const radius = 60;
   const stroke = 6;
-  const normalizedRadius = radius - stroke * 2;
+  const normalizedRadius = radius - stroke;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
@@ -40,9 +40,21 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && navigate('/tracker')}
     >
       <div className="progress-ring" role="img" aria-label={`Progress circle showing ${percentage}% completion`}>
-        <svg height={radius * 2} width={radius * 2} aria-hidden="true">
+        <svg
+          viewBox={`0 0 ${radius * 2} ${radius * 2}`}
+          preserveAspectRatio="xMidYMid meet"
+          height={radius * 2}
+          width={radius * 2}
+        >
+          <defs>
+            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f97316" />
+              <stop offset="100%" stopColor="#f03e3e" />
+            </linearGradient>
+          </defs>
+
           <circle
-            stroke="#eee"
+            stroke="#f0f0f0"
             fill="transparent"
             strokeWidth={stroke}
             r={normalizedRadius}
@@ -50,7 +62,7 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
             cy={radius}
           />
           <circle
-            stroke={strokeColor}
+            stroke="url(#progressGradient)"
             fill="transparent"
             strokeWidth={stroke}
             strokeLinecap="round"
@@ -59,10 +71,13 @@ function TodayTaskSummary({ totalTasks, completedTasks }) {
             r={normalizedRadius}
             cx={radius}
             cy={radius}
+            className="animated-progress"
           />
         </svg>
-        <div className="progress-text" style={{ color: textColor }}>
-          {percentage}%
+
+        <div className="progress-text">
+          <div className="percent" style={{ color: textColor }}>{percentage}%</div>
+          <div className="label">Today</div>
         </div>
       </div>
 

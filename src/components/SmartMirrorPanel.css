@@ -1,0 +1,196 @@
+
+
+.mirror-time {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.mirror-date {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.mirror-progress {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #444;
+}
+
+.mirror-next {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #f03e3e;
+}
+
+.mirror-quote {
+  font-style: italic;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #888;
+}
+
+/* Top-level panel */
+.smart-mirror-panel {
+  position: relative;
+  background: #fff;
+  color: #222;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease-in;
+  border: 1px solid #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Sound button default (desktop) */
+.mirror-sound-toggle {
+  display: inline-flex; /* instead of flex or block */
+  align-items: center;
+  justify-content: center;
+  background: rgba(240, 62, 62, 0.08);
+  border: none;
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: #f03e3e;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 36px;
+  height: 36px;
+  min-width: unset;
+  max-width: 40px;
+}
+
+/* SVG sizing */
+.mirror-sound-toggle svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* 💡 Tablet & smaller: stop overlapping */
+@media (max-width: 600px) {
+  .mirror-sound-toggle {
+     position: relative;
+    margin: 0 0 1rem auto;
+  }
+
+  .mirror-sound-toggle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .smart-mirror-panel {
+    padding: 1.25rem 1rem;
+  }
+
+  .mirror-time {
+    font-size: 2rem;
+  }
+
+  .mirror-quote {
+    font-size: 0.85rem;
+  }
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(240, 62, 62, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(240, 62, 62, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(240, 62, 62, 0.2);
+  }
+}
+.smart-mirror-glow {
+  animation: glowPulse 2s infinite ease-in-out;
+}
+@media (max-width: 768px) {
+  .smart-mirror-panel {
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .mirror-time {
+    font-size: 2.2rem;
+  }
+
+  .mirror-date {
+    font-size: 0.95rem;
+  }
+
+  .mirror-progress {
+    font-size: 0.95rem;
+  }
+
+  .mirror-next {
+    font-size: 0.95rem;
+  }
+
+  .mirror-quote {
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .mirror-sound-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .smart-mirror-panel {
+    padding: 1rem 0.75rem;
+    text-align: left;
+  }
+
+  .mirror-time {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .mirror-date,
+  .mirror-progress,
+  .mirror-next,
+  .mirror-quote {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .mirror-quote {
+    margin-top: 1rem;
+  }
+
+  .mirror-sound-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.35rem;
+  }
+}
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

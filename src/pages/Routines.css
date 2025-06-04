@@ -28,13 +28,7 @@ max-width: 900px;
   gap: 1rem;
 }
 
-.routine-item {
-  
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 12px;
 
-}
 @media (max-width: 480px) {
   .routines-page.mobile-tight {
     padding-left: 0rem;
@@ -50,16 +44,12 @@ max-width: 900px;
 }
 
 
-.routine-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.routine-title {
-  font-size: 1rem;
+h3.routine-title {
+  font-size: 0.5rem;
   font-weight: 600;
   color: #111;
+  margin: 0;
 }
 
 .routine-bottom {

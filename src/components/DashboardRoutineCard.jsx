@@ -33,7 +33,8 @@ function DashboardRoutineCard({ routine }) {
       aria-label={`Routine: ${routine.title}, ${taskCount} tasks, next on ${next}`}
     >
       <div className="routine-card-header">
-        <h3 className="routine-title">{routine.title}</h3>
+       <h3 className="routine-title">{routine.title}</h3>
+
         <span className="routine-tag">{routine.frequency}</span>
       </div>
 

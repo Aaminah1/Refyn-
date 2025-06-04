@@ -6,7 +6,8 @@ function Auth({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [mode, setMode] = useState('login');
   const [error, setError] = useState('');
   const [accountCreated, setAccountCreated] = useState(false);
@@ -46,15 +47,17 @@ function Auth({ onLogin }) {
         setUsername('');
         setPassword('');
         setConfirmPassword('');
+        setShowLoginPassword(false);
+        setShowSignupPassword(false);
       }
     }
   };
 
-  const renderPasswordField = (value, setter, placeholder, id) => (
+  const renderPasswordField = (value, setter, placeholder, id, show, setShow) => (
     <div style={{ position: 'relative', marginBottom: '1rem' }}>
       <input
         id={id}
-        type={showPassword ? 'text' : 'password'}
+        type={show ? 'text' : 'password'}
         placeholder={placeholder}
         value={value}
         onChange={(e) => setter(e.target.value)}
@@ -71,13 +74,13 @@ function Auth({ onLogin }) {
         }
       />
       <span
-        onClick={() => setShowPassword(prev => !prev)}
-        aria-label={showPassword ? 'Hide password' : 'Show password'}
-        aria-pressed={showPassword}
+        onClick={() => setShow(prev => !prev)}
+        aria-label={show ? 'Hide password' : 'Show password'}
+        aria-pressed={show}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') setShowPassword(prev => !prev);
+          if (e.key === 'Enter' || e.key === ' ') setShow(prev => !prev);
         }}
         style={{
           position: 'absolute',
@@ -88,7 +91,7 @@ function Auth({ onLogin }) {
           fontSize: '18px'
         }}
       >
-        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        {show ? <EyeOff size={18} /> : <Eye size={18} />}
       </span>
     </div>
   );
@@ -103,24 +106,37 @@ function Auth({ onLogin }) {
           type="text"
           placeholder="Username"
           value={username}
-         onChange={(e) => {
-  const input = e.target.value;
-  const formatted = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-  setUsername(formatted);
-}}
-
+          onChange={(e) => {
+            const input = e.target.value;
+            const formatted = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+            setUsername(formatted);
+          }}
           required
           aria-required="true"
           autoComplete="username"
         />
 
         <label htmlFor="password">Password</label>
-        {renderPasswordField(password, setPassword, 'Password', 'password')}
+        {renderPasswordField(
+          password,
+          setPassword,
+          'Password',
+          'password',
+          mode === 'login' ? showLoginPassword : showSignupPassword,
+          mode === 'login' ? setShowLoginPassword : setShowSignupPassword
+        )}
 
         {mode === 'signup' && (
           <>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            {renderPasswordField(confirmPassword, setConfirmPassword, 'Confirm Password', 'confirmPassword')}
+            {renderPasswordField(
+              confirmPassword,
+              setConfirmPassword,
+              'Confirm Password',
+              'confirmPassword',
+              showSignupPassword,
+              setShowSignupPassword
+            )}
           </>
         )}
 
@@ -144,6 +160,8 @@ function Auth({ onLogin }) {
                 setMode('signup');
                 setError('');
                 setAccountCreated(false);
+                setShowLoginPassword(false);
+                setShowSignupPassword(false);
               }}
             >
               Sign Up
@@ -158,6 +176,8 @@ function Auth({ onLogin }) {
                 setMode('login');
                 setError('');
                 setAccountCreated(false);
+                setShowLoginPassword(false);
+                setShowSignupPassword(false);
               }}
             >
               Log In

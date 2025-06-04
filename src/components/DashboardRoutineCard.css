@@ -1,0 +1,80 @@
+.dashboard-routine-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-routine-card:hover {
+  transform: translateY(-2px);
+  background-color: #fafafa;
+}
+
+.dashboard-routine-card:focus {
+  outline: 2px solid #f03e3e;
+  outline-offset: 3px;
+}
+
+.routine-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.routine-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+}
+
+.routine-tag {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 999px;
+}
+
+.routine-card-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #444;
+}
+.routine-card-details p {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+.routine-tasks {
+  margin: 0;
+}
+
+.routine-next {
+  margin: 0;
+}
+
+.highlight {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .dashboard-routine-card {
+    padding: 1rem;
+  }
+
+  .routine-card-details {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}

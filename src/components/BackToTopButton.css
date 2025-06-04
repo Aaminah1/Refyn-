@@ -1,0 +1,46 @@
+/* BackToTopButton.css */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 4.5rem;
+  right: 4rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  z-index: 999;
+  transition: color 0.25s ease;
+}
+
+.back-to-top-btn:hover {
+  color: #f03e3e;
+}
+.back-to-top-btn:focus {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+
+/* Desktop view */
+@media (min-width: 768px) {
+  .back-to-top-btn {
+    bottom: 2.5rem;
+    right: 2.5rem;
+  }
+}
+
+/* Tablet & small screens */
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 4.5rem;   /* Push above bottom nav & CTA */
+    right: 1rem;    /* Tuck neatly in bottom right */
+  }
+}
+
+/* Tiny phones */
+@media (max-width: 400px) {
+  .back-to-top-btn {
+    bottom: 4.5rem;   /* Push even higher on short screens */
+    right: 0.75rem;
+  }
+}

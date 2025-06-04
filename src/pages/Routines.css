@@ -1,0 +1,368 @@
+.routines-page {
+max-width: 900px;
+  margin: auto;
+  padding:  0.5rem 1rem;
+  font-family: 'Inter', sans-serif;
+}
+.routines-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #111;
+}
+.routines-page h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.routines-subtext {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.routine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.routine-item {
+  
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 12px;
+
+}
+
+.routine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routine-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.routine-bottom {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.routine-bottom label {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+
+.routine-bottom select {
+   padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 0.9rem;
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+.routine-bottom select:focus {
+  outline: none;
+  border-color: #333;
+}
+
+
+
+
+.fixed-library-button {
+  position: fixed;
+  bottom: 2.5rem; /* Slightly higher than edge */
+  left: 50%;
+  transform: translateX(-50%);
+ 
+  width: auto;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.fixed-library-button .cta-button {
+  pointer-events: auto;
+  background-color: #f03e3e;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 240px;
+}
+
+.fixed-library-button .cta-button:hover {
+  background-color: #d62828;
+  transform: translateY(-1px);
+}
+
+/* Adjust for mobile to prevent overlap with bottom nav */
+@media (max-width: 768px) {
+  .fixed-library-button {
+    bottom: 5rem; /* pushed higher to sit above bottom nav */
+  }
+}
+
+@media (max-width: 400px) {
+  .fixed-library-button {
+    bottom: 4rem; /* even higher for very small screens */
+  }
+}
+
+.no-routines-msg {
+  font-style: italic;
+  color: #999;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .routines-page h2 {
+    font-size: 1.4rem;
+  }
+
+  .routine-title {
+    font-size: 0.95rem;
+  }
+
+  .routine-bottom select {
+    width: 100%;
+  }
+
+  .delete-btn {
+    padding: 0.2rem;
+  }
+
+  .add-from-library-btn {
+    font-size: 0.95rem;
+  }
+}
+/* Keep full width on mobile */
+.routine-bottom select {
+  width: 100%;
+}
+
+/* On desktop, cap the dropdown width */
+@media (min-width: 768px) {
+  .routine-bottom select {
+    width: 220px; /* or 250px depending on your preference */
+  }
+}
+.routine-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.routine-bottom label {
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+.routine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.routine-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #666;
+  gap: 0.2rem;
+}
+
+.routine-count {
+  font-weight: 500;
+  color: #444;
+}
+
+.routine-next {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.routine-next strong {
+  color: #111;
+  font-weight: 600;
+}
+.highlight-today {
+   color: #f03e3e !important;
+  font-weight: 600;
+}
+
+.routine-actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+
+}
+
+.routine-frequency {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  
+}
+
+.routine-frequency label {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.routine-frequency select {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f8f8f8;
+   cursor: pointer;
+}
+
+.view-btn {
+  background-color: #fff;
+  color: #f03e3e;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  border: 2px solid #f03e3e;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.view-btn:hover {
+   background-color: #fff5f5; /* soft red tint */
+  color: #d62828;            /* slightly deeper red */
+  border-color: #d62828;
+}
+.routine-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #000000; 
+  padding: 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #f03e3e; /* turn red on hover */
+  
+}
+
+
+
+.routines-count {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+.routines-count strong {
+  color: #e63946;
+  font-weight: 600;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0 6rem; /* space above + bottom nav gap */
+  font-size: 1rem;
+}
+
+.pagination-text {
+  font-weight: 500;
+  color: #333;
+}
+
+.pagination-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.pagination-button:hover {
+  color: #e63946;
+}
+
+.pagination-button:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .pagination-controls {
+    margin-bottom: 7rem; /* leave room above bottom nav */
+  }
+}
+
+
+
+
+@media (max-width: 600px) {
+  .routine-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-btn {
+    width: 100%;
+  }
+
+  .routine-frequency select {
+    width: 100%;
+  }
+}
+.routine-item {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.routine-item.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+.routine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.routine-list.fade-out {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+}

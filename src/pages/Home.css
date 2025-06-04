@@ -1,0 +1,288 @@
+.onboarding-card {
+  max-width: 960px;
+  margin: 4rem auto;
+  padding: 2rem;
+}
+
+.onboarding-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.onboarding-illustration {
+  max-width: 300px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.onboarding-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.onboarding-welcome {
+   font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #111;
+}
+
+.onboarding-text h3 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #111;
+}
+
+.onboarding-subtext {
+ font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.onboarding-image-inline {
+  display: none;
+}
+
+
+.onboarding-btn {
+  background-color: #f03e3e;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.onboarding-btn:hover {
+  background-color: #d62828;
+}
+
+@media (max-width: 768px) {
+  .onboarding-card {
+    margin: 1rem auto; /* Reduce from 4rem to 1.5rem */
+    padding: 1rem 1rem;
+  }
+  .onboarding-text h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .onboarding-subtext {
+    margin-bottom: 1rem;
+  }
+
+  .onboarding-btn {
+    margin-top: 1rem;
+  }
+}
+
+
+.dashboard {
+max-width: 900px;
+  margin: auto;
+  padding:  0.5rem 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.dashboard h2 {
+ font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #111;
+}
+
+.dashboard p {
+ font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  
+}
+
+
+
+.dashboard section h3 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.dashboard ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.dashboard li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.manage-routines-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1e40af; /* Tailwind's blue-800 or choose your link color */
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.manage-routines-link:hover {
+  text-decoration: underline;
+  color: #1d4ed8; /* Slightly lighter on hover */
+}
+
+
+.dashboard img {
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.progress-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.progress-grid > div {
+  flex: 1 1 30%;
+  max-width: 30%;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111;
+  left:14rem;
+}
+/* Tablet: 2 columns */
+@media (min-width: 900px) and (max-width: 1023px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard section {
+    padding: 1.5rem;
+  }
+
+  .span-2 {
+    grid-column: span 2;
+  }
+}
+
+
+/* Optional Desktop: back to 1 column or 3 */
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr); /* or repeat(3, 1fr) if you prefer */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .dashboard h2 {
+    font-size: 1.6rem;
+  }
+
+  .dashboard section {
+    padding: 1rem;
+  }
+
+  .progress-grid {
+    flex-direction: column;
+  }
+
+  .progress-grid > div {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard h2 {
+    font-size: 1.4rem;
+  }
+
+  .dashboard section h3 {
+    font-size: 1.2rem;
+  }
+
+  .dashboard button {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* Mobile responsive: stack vertically */
+@media (max-width: 768px) {
+  .onboarding-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .onboarding-illustration {
+    display: none; /* Hide side image */
+  }
+
+  .onboarding-text {
+    align-items: center;
+    text-align: center; /* 🟢 This centers all text inside */
+  }
+
+  .onboarding-text h3 {
+    font-size: 2.2rem; /* Optional: slightly smaller heading on mobile */
+  }
+
+  .onboarding-image-inline {
+    display: block;
+    max-width: 160px;
+    margin: 1rem auto;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .dashboard h1 {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .dashboard section {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .task-summary-card,
+  .recent-progress-card,
+  .dashboard-routine-card {
+    gap: 1.25rem;
+    padding: 1rem;
+  }
+}

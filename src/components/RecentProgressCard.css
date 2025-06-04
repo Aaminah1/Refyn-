@@ -1,0 +1,90 @@
+.recent-progress-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+ transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.recent-progress-card:hover {
+  background-color: #f9f9f9;
+  transform: translateY(-2px);
+}
+
+.progress-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1.25rem;
+}
+
+.progress-meta p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.progress-meta strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.progress-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.progress-thumb {
+  flex: 1 1 90px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.progress-thumb img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.progress-date {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .recent-progress-card {
+    padding: 1rem;
+  }
+
+  .progress-meta {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .progress-image-grid {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .progress-thumb {
+    flex: 1 1 80px;
+    max-width: 80px;
+  }
+
+  .progress-thumb img {
+    border-radius: 6px;
+  }
+
+  .progress-date {
+    font-size: 0.7rem;
+  }
+}

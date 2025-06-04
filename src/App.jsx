@@ -1,37 +1,114 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { useRefyn } from './context/RefynContext';
+import ScrollToTop from './components/ScrollToTop'; 
 
+import Navbar from './components/Navbar';
+import RoutineDetails from './pages/RoutineDetails';
+import Auth from './pages/Auth.jsx';
 import Home from './pages/Home.jsx';
 import Tracker from './pages/Tracker.jsx';
 import Routines from './pages/Routines.jsx';
 import Library from './pages/Library.jsx';
+import Settings from './pages/Settings.jsx';
+import RoutineModal from './components/RoutineModal.jsx';
+import BottomNav from './components/BottomNav';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('Home');
+  const {
+    user,
+    setUser,
+    routines,
+    trackerTasks,
+    handleLogout,
+    handleAddRoutine,
+    handleDeleteRoutine,
+    handleUpdateFrequency,
+    handleToggleTask
+  } = useRefyn();
 
-  const renderPage = () => {
-    switch (activeTab) {
-      case 'Home': return <Home />;
-      case 'Tracker': return <Tracker />;
-      case 'Routines': return <Routines />;
-      case 'Library': return <Library />;
-      default: return <Home />;
-    }
+  const [selectedRoutine, setSelectedRoutine] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const [wasJustLoggedIn, setWasJustLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = (username) => {
+    setUser(username);
+    setWasJustLoggedIn(true);
   };
 
+  React.useEffect(() => {
+    if (wasJustLoggedIn) {
+      navigate('/');
+      setWasJustLoggedIn(false);
+    }
+  }, [wasJustLoggedIn, navigate]);
+
+  if (!user) return <Auth onLogin={handleLogin} />;
+
   return (
-    <div className="App">
-      <nav className="navbar">
-        <button onClick={() => setActiveTab('Home')}>Home</button>
-        <button onClick={() => setActiveTab('Tracker')}>Tracker</button>
-        <button onClick={() => setActiveTab('Routines')}>Routines</button>
-        <button onClick={() => setActiveTab('Library')}>Library</button>
-      </nav>
-      <div className="content">
-        {renderPage()}
+    <>
+      <ScrollToTop />
+      <div className="App" role="application" aria-label="Routine tracking application">
+        <Navbar user={user} handleLogout={handleLogout} />
+
+        <main className="content" id="main-content" aria-live="polite">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tracker" element={<Tracker date={selectedDate} />} />
+            <Route path="/routines" element={
+              <Routines
+                routines={routines}
+                trackerTasks={trackerTasks}
+                onDeleteRoutine={handleDeleteRoutine}
+                onUpdateFrequency={handleUpdateFrequency}
+                selectedDate={selectedDate}
+                onSelectDate={setSelectedDate}
+              />
+            } />
+            <Route path="/library" element={
+              <Library
+                onAddRoutine={handleAddRoutine}
+                onSelectRoutine={setSelectedRoutine}
+                routines={routines}
+              />
+            } />
+            <Route path="/settings" element={
+              <Settings username={user} onClose={() => window.history.back()} />
+            } />
+            <Route path="/routine/:id" element={
+              <RoutineDetails
+                routines={routines}
+                trackerTasks={trackerTasks}
+                onAddRoutine={handleAddRoutine}
+                onToggleTask={handleToggleTask}
+              />
+            } />
+          </Routes>
+        </main>
+
+        <BottomNav />
+
+        {selectedRoutine && (
+          <RoutineModal
+            routine={selectedRoutine}
+            onClose={() => setSelectedRoutine(null)}
+            onToggleTask={handleToggleTask}
+            isAlreadyAdded={routines.some(r => r.id === selectedRoutine.id)}
+            onAddRoutine={handleAddRoutine}
+          />
+        )}
       </div>
-    </div>
+    </>
   );
 }
 
-export default App;
+export default function AppWithRouter() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}

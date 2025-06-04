@@ -1,0 +1,73 @@
+.task-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.task-summary-card:hover {
+  background-color: #fafafa;
+   transform: translateY(-2px);
+}
+
+.progress-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.task-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.task-stats {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 0.3rem;
+}
+
+.task-motivation {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.task-meta {
+  font-size: 0.75rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .task-summary-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress-ring {
+    margin-bottom: 1rem;
+    align-self: center;
+  }
+}

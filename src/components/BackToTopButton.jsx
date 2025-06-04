@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import Tooltip from './Tooltip';
 import './BackToTopButton.css';
 
 const BackToTopButton = () => {
@@ -23,15 +24,17 @@ const BackToTopButton = () => {
   };
 
   return visible ? (
-    <button
-      className="back-to-top-btn"
-      onClick={scrollToTop}
-      onKeyDown={handleKeyPress}
-      aria-label="Back to top"
-      tabIndex={0}
-    >
-      <ArrowUp size={22} strokeWidth={2.5} />
-    </button>
+    <Tooltip text="Back to top">
+      <button
+        className="back-to-top-btn"
+        onClick={scrollToTop}
+        onKeyDown={handleKeyPress}
+        aria-label="Back to top"
+        tabIndex={0}
+      >
+        <ArrowUp size={22} strokeWidth={2.5} />
+      </button>
+    </Tooltip>
   ) : null;
 };
 

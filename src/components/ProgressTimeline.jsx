@@ -3,7 +3,7 @@ import './ProgressTimeline.css';
 import { Trash2 } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import PreviewModal from './PreviewModal';
-
+import Tooltip from './Tooltip';
 
 function ProgressTimeline({
   routines,
@@ -116,13 +116,15 @@ function ProgressTimeline({
                 </div>
 
                 <div className="timeline-card responsive">
-                  <button
-                    className="timeline-delete-icon"
-                    onClick={() => setConfirmIdx(idx)}
-                    aria-label="Delete image"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                  <Tooltip text="Delete this entry">
+                    <button
+                      className="timeline-delete-icon"
+                      onClick={() => setConfirmIdx(idx)}
+                      aria-label="Delete image"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </Tooltip>
 
                   <div className="image-container">
                     <img
@@ -154,8 +156,6 @@ function ProgressTimeline({
           })}
         </div>
       )}
-
-      
 
       {previewIndex !== null && (
         <PreviewModal

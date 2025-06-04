@@ -2,14 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import './SmartMirrorPanel.css';
 import { Volume2, VolumeX } from 'lucide-react';
 import ambientSound from '../assets/ambient.mp3';
+import Tooltip from '../components/Tooltip';
+import QUOTES from '../data/quotes';
 
-const QUOTES = [
-  "Small steps build big change.",
-  "Your future is created by what you do today.",
-  "Focus. Breathe. Begin again.",
-  "You’re already halfway there.",
-  "Discipline is remembering what you want."
-];
+
 
 function SmartMirrorPanel({ todayTasks, completedTasks }) {
   const [time, setTime] = useState(new Date());
@@ -53,13 +49,16 @@ function SmartMirrorPanel({ todayTasks, completedTasks }) {
     >
       <h2 id="mirror-heading" className="sr-only">Smart Mirror Panel</h2>
 
-      <button
-        className="mirror-sound-toggle"
-        onClick={toggleAudio}
-        aria-label={isPlaying ? "Turn off ambient sound" : "Turn on ambient sound"}
-      >
-        {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-      </button>
+      <Tooltip text={isPlaying ? 'Turn off ambient sound' : 'Turn on ambient sound'}>
+  <button
+    className="mirror-sound-toggle"
+    onClick={toggleAudio}
+    aria-label={isPlaying ? "Turn off ambient sound" : "Turn on ambient sound"}
+  >
+    {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+  </button>
+</Tooltip>
+
 
       <audio ref={audioRef} loop preload="auto" src={ambientSound} />
 

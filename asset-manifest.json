@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Refyn-/static/css/main.42fef59c.css",
+    "main.js": "/Refyn-/static/js/main.aeaf7148.js",
+    "index.html": "/Refyn-/index.html",
+    "main.42fef59c.css.map": "/Refyn-/static/css/main.42fef59c.css.map",
+    "main.aeaf7148.js.map": "/Refyn-/static/js/main.aeaf7148.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.42fef59c.css",
+    "static/js/main.aeaf7148.js"
+  ]
+}
